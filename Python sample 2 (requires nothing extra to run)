@@ -1,0 +1,77 @@
+#09/18/2017
+#Lists and Tuples
+#Cole Gilmore
+import math
+import turtle
+from math import sqrt
+import random
+     
+#Question 1:
+
+#Creates a list of random numbers
+t = (t*(t+1)//2 for t in range (1,10))
+t = list(t)
+print(t)
+
+#Question 2:
+
+#Takes all the numbers sums them, averages them, and 
+a = [int(x) for x in input("Enter a list of numbers with a space in between each number").split()]
+
+def my_sum(a):
+    b = sum(a)
+    print(b)
+
+my_sum(a)
+
+def my_average(a):
+    average = sum(a) / len(a) 
+    print(average)
+
+my_average(a)
+
+def my_standard_deviation(a):
+    length = len(a)
+    mean = sum(a) / length
+    differences = [a - mean for a in a]
+    sq_differences = [d ** 2 for d in differences]
+    ssd = sum(sq_differences)
+    variance = ssd / length
+    sd = sqrt(variance)
+    print(sd)
+
+my_standard_deviation(a)
+
+#Question 3:
+#magic 8ball game
+allMessages = [ 'It is certain',
+                'It is decidedly so',
+                'Without a doubt',
+                'Yes definitely',
+                'You may rely on it',
+                'As I see it, yes',
+                'Most likely',
+                'Outlook good',
+                'Yes',
+                'Signs point to yes',
+                'Reply hazy try again',
+                'Ask again later',
+                'Better not tell you now',
+                'Cannot predict now',
+                'Concentrate and ask again',
+                'Don\'t count on it',
+                'My reply is no',
+                'My sources say no',
+                'Outlook not so good',
+                'Very doubtful' ]
+def magic8ball(n):
+    positive = random.sample(n[1:10], 4)
+    pos = random.sample(positive, 1)
+    neutral = random.sample(n[11:15] , 2)
+    neu = random.sample(neutral, 1)
+    negative = random.sample(n[16:20] ,2)
+    neg = random.sample(negative, 1)
+    final = (pos, neu, neg)
+    response = (random.sample(final, 1)[0])
+    print(response)
+magic8ball(allMessages)
