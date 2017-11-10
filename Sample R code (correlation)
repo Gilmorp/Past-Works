@@ -1,0 +1,77 @@
+#Dataset
+data<-read.csv(choose.files())
+
+#Question 1
+
+#Test for normality 
+by(data$crime, data$region, shapiro.test)# normal
+
+#Looking for difference between the regions for crime
+a1<-aov(data$crime~data$region)
+summary(a1)
+t1<-TukeyHSD(a1)
+t1
+
+#Question 2
+
+#Test for normality 
+by(data$poverty, data$region, shapiro.test) #normal
+
+#Looking for difference between the regions for poverty
+a2<-aov(data$poverty~data$region)
+summary(a2)
+t2<-TukeyHSD(a2)
+t2
+
+#Question 3
+
+#Test for nomality 
+by(data$pcths, data$region, shapiro.test) #normal
+
+#Looking for difference between the regions for education rate
+a3<-aov(data$pcths~data$region)
+summary(a3)
+t3<-TukeyHSD(a3)
+t3
+
+#Question 4
+
+#Tests for normality 
+shapiro.test(data$single) #normal
+
+#Correlations
+cor.test(data$crime, data$poverty)
+cor.test(data$crime, data$single)
+cor.test(data$crime, data$pcths)
+
+#Question 5 
+
+#Subset the data by region
+West <- subset(data, region == "W")
+South <- subset(data, region =="S")
+Midwest <- subset(data, region =="MW")
+Northeast <- subset(data, region =="NE")
+
+#Correlation tests between crime and poverty by region
+cor.test(West$crime, West$poverty)
+cor.test(South$crime, South$poverty)
+cor.test(Midwest$crime, Midwest$poverty)
+cor.test(Northeast$crime, Northeast$poverty)
+
+#Correlationt tests between crime and single parents by region
+cor.test(West$crime, West$single)
+cor.test(South$crime, South$single)
+cor.test(Midwest$crime, Midwest$single)
+cor.test(Northeast$crime, Northeast$single)
+
+#Question 6
+
+#plots the relationship between poverty and crime and makes all the points the letter for the region it represents
+plot(poverty ~ crime, pch=as.character(region), data=data, main="Crime and poverty by region", 
+     xlab="crime", ylab="poverty")
+#Colors the abline for each region. W = Red, S = Navyblue, MW = Darkgreen, and NE = Black
+abline(lm(poverty ~ crime, data=data, subset=region=="W"), col="red")
+abline(lm(poverty~crime, data=data, subset=region=="S"), col="navyblue")
+abline(lm(poverty~crime, data=data, subset=region=="MW"), col="darkgreen")
+abline(lm(poverty~crime, data=data, subset=region=="NE"), col="black")
+
