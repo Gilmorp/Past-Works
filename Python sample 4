@@ -1,0 +1,43 @@
+#requires matplotylib be installed via the command prompt 
+
+#Date: 10/18/2017
+#Lecture: Projections 2
+#Name: Cole Gilmore
+
+#Question 1
+
+import matplotlib.pyplot as plt
+
+def plot_world(points, numgraticule, numline):
+    ax = plt.gca()
+    for i in range(numline):
+        if i<numgraticule:
+            col = 'lightgrey'
+        else:
+            col = '#5a5a5a'
+        pts = [[p[1], p[2]] for p in points if p[0]==i]
+        l = plt.Polygon(pts, color=col, fill=False, closed=False)
+        ax.add_line(l)
+
+    plt.axis('equal')
+    ax.axes.get_xaxis().set_visible(False)
+    ax.axes.get_yaxis().set_visible(False)
+    ax.set_frame_on(False)
+    plt.show()
+
+import sys
+sys.path.append('E:\College 4th year semester 1\Geog 5222')
+
+from geom.worldmap import *
+from geom.transform1 import *
+
+fname = 'E:\\College 4th year semester 1\\Geog 5222\\data\\ne_110m_coastline.shp'
+
+raw_points, numgraticule, numline = prep_projection_data(fname)
+
+points=[]
+for p in raw_points:
+    p1 = transform1(p[1], p[2])
+    points.append([p[0], p1[0], p1[1]])
+
+plot_world(points, numgraticule, numline)
