@@ -1,0 +1,106 @@
+###############################################
+#            #Name: Cole Gilmore              #  
+#          Submission: Homework 1a            # 
+#          Date: September 7, 2017            #
+###############################################
+
+import math
+
+###############################
+#        Question 1           #
+###############################
+
+def sequence_sum():
+    a = int(input('Enter the initial term'))
+    d = int(input('Enter the difference term'))
+    n = int(input('Enter the number of terms'))
+    sequencesum = (a + (a + (n-1)*d) * n/2)
+    return sequencesum
+
+print(sequence_sum())
+
+
+###############################
+#        Question 2           #
+###############################
+#inches to meters converter
+def length_converter():
+    inches = input('Enter a length in inches')
+    meters = (float(inches) * 0.0254)
+    return meters
+
+print(length_converter())
+
+
+###############################
+#        Question 3           #
+############################### 
+#draws shapes with turtles
+import turtle
+
+def square(t, l):
+    for i in range(4):
+        t.fd(100)
+        t.lt(90)
+def square_on_circle(t, n, length):
+    t.rt(135)
+    for i in range(n):
+        t.pu()
+        t.fd(7)
+        t.rt(45)
+        t.pd()
+        square(t, length)
+        t.rt(-45)
+
+steve = turtle.Turtle()
+steve.speed(0)
+square_on_circle(steve, 40, 100)
+
+
+###############################
+#        Question 4           #
+###############################
+#This draws shapes with turtles
+
+t = turtle.Turtle()
+
+#shape 1
+
+def polyline(t, n, length, angle):
+    for i in range(n):
+        t.fd(length)
+        t.lt(angle)
+
+def arc(t, r, angle):
+    arc_length = 2 * math.pi * r * abs(angle) / 360
+    n = int(arc_length / 4) + 1
+    step_length = arc_length / n
+    step_angle = float(angle) / n
+    t.lt(step_angle/2)
+    polyline(t, n, step_length, step_angle)
+    t.rt(step_angle/2)
+
+def circle(t, r):
+    arc(t, r, 360)
+    for i in range(4):
+        t.lt(35)
+        arc(t, r, 360)
+
+    t.speed(0)
+    for i in range(5):
+        t.lt(35)
+        arc(t, r, 360)
+    
+
+circle(t, 50)
+
+#shape 2
+def circle(t, r):
+    t.speed(0)
+    for i in range(10):
+        t.lt(35)
+        t.fd(20)
+        arc(t, r, 360)
+    
+
+circle(t, 75)
