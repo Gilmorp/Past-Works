@@ -1,0 +1,83 @@
+#imports the data set 
+input<-read.csv(choose.files())
+
+#code for question 1
+
+#means for average elevation per fire frequency level
+aggregate(input$avgelev, list(input$fftype), FUN=mean)
+#there is a difference between average elevation between the three fire frequency levels 
+
+#means for average slope per fire frequency level
+aggregate(input$avgstep, list(input$fftype), FUN=mean)
+#there is a difference between aaverage slope between the three fire frequency levels 
+
+#means for the distance to grasslands per fire frequency level
+aggregate(input$mean_dist_grass, list(input$fftype), FUN=mean)
+#there is a difference between distance to grasslands and the fire frequecy levels 
+
+#means for average distance to ravine drainage 
+aggregate(input$dist_rav, list(input$fftype), FUN=mean)
+#there is a differnece between distance to ravine drainage and the three fire frequency levels
+
+#code for question 2
+
+#means for each tree cover type
+aggregate(input$covcode, list(input$fftype), FUN=mean)
+
+#normalizes the data 
+by(input$covcode, input$fftype, shapiro.test)
+
+anova1 <- aov(input$covcode ~ input$fftype)
+summary(anova1)
+TukeyHSD(anova1)
+
+#means for steepness 
+aggregate(input$step1, list(input$fftype), FUN=mean)
+
+#normalizes the data 
+by(input$step1, input$fftype, shapiro.test)
+
+anova2 <- aov(input$step1 ~ input$fftype)
+summary(anova2)
+TukeyHSD(anova2)
+
+#code for question 3
+
+#recodes the values for 3 in fftype to 2 so there are only 2 fire frequency types
+input$fftype[input$fftype==3] <- 2
+
+#code for question 4
+
+#mean for average elevation 
+aggregate(input$avgelev, list(input$fftype), FUN=mean)
+
+#mean for average slope
+aggregate(input$avgstep, list(input$fftype), FUN=mean)
+
+#mean for distance to grasslands 
+aggregate(input$mean_dist_grass, list(input$fftype), FUN=mean)
+
+#mean for distance to ravine drainage 
+aggregate(input$dist_rav, list(input$fftype), FUN=mean)
+
+#code for question 5
+
+#mean for each tree cover type
+aggregate(input$covcode, list(input$fftype), FUN=mean)
+
+#normalizes the data
+by(input$covcode, input$fftype, shapiro.test)
+
+anova3 <- aov(input$covcode ~ input$fftype)
+summary(anova3)
+TukeyHSD(anova3)
+
+#means for steepness 
+aggregate(input$step1, list(input$fftype), FUN=mean)
+
+#normalizes the data 
+by(input$step1, input$fftype, shapiro.test) 
+
+anova4 <- aov(input$step1 ~ input$fftype)
+summary(anova4)
+TukeyHSD(anova4)
