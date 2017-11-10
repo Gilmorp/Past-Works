@@ -1,0 +1,67 @@
+#Centroid areas and point in polygon
+#10/11/2017
+#Cole Gilmore
+
+import sys
+sys.path.append('E:\\College 4th year semester 1\\Geog 5222')
+from geom.point import *
+from geom.centroid import *
+from geom.point_in_polygon import *
+
+#Question 1
+
+import matplotlib.pyplot as plt
+
+points = [ [1,1], [4,3], [8,3], [8,3.5], [4,3.5], [1,5], [1,1] ]
+
+polygon = [ Point(p[0], p[1]) for p in points ]
+c = centroid(polygon)[1]
+
+def mean(numbers):
+    return float(sum(numbers)) / max(len(numbers),1)
+# TODO: compute the mean of the X coordinates in polygon as x:
+x =  mean([1,4,8,8,4,1,1])
+
+# TODO: compute the mean of the Y coordinates in polygon as y:
+y = mean([1,3,3,3.5,3.5,5,1])
+
+d = Point(x, y)
+print(c, d)
+
+n = len(polygon)
+line1 = [ [p.x, p.y] for p in polygon ]
+l1 = plt.Polygon(line1, closed=True, fill=True, facecolor='grey', edgecolor='blue', alpha=0.5)
+plt.gca().add_patch(l1)
+plt.scatter([c.x], [c.y], color='blue', alpha=.9)
+plt.scatter([d.x], [d.y], color='red', alpha=.9)
+
+plt.text(c.x+0.1, c.y+0.1, 'centroid')
+plt.text(d.x+0.1, d.y-0.2, 'mean')
+ax = plt.gca()
+ax.set_aspect(1)
+
+plt.show()
+
+#Question 2
+
+bounds = [0, 10, 0, 10]
+triangle = [[Point(p[0], p[1]) for p in [ [0,0], [10,5], [3,10], [0,0] ] ] ]
+point = Point (5,5)
+
+
+x = pip_cross2(point, triangle)
+import random 
+
+areas = []
+for r in range(100):
+    points500 = [Point(random.randint(0, 10), random.randint(0, 10)) for i in range (500)]
+    isin = [pip_cross2(p, triangle)[0] for p in points500]
+    isincount = [1 if i == True else 0 for i in isin]
+    totalin = sum(isincount)
+    area = 10*10*totalin/len(isincount)
+    areas.append(area)
+
+#plt.hist(areas)
+plt.show()
+
+print('the average size of the triangle is', sum(areas)/len(areas))
